@@ -9,9 +9,9 @@ import com.bumptech.glide.Glide;
 
 import han.ayeon.searchimgandvideo.R;
 import han.ayeon.searchimgandvideo.databinding.FragmentSavedItemBinding;
-import han.ayeon.searchimgandvideo.view.ResultItemLoader;
+import han.ayeon.searchimgandvideo.view.ImageLoader;
 
-public class SavedListViewHolder extends RecyclerView.ViewHolder implements ResultItemLoader {
+public class SavedListViewHolder extends RecyclerView.ViewHolder implements ImageLoader {
 
     private ImageView thumbNailView = itemView.findViewById(R.id.thumbnail_view);
 

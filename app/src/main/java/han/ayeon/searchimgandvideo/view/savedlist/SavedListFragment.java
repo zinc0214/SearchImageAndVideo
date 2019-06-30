@@ -16,12 +16,11 @@ import java.util.ArrayList;
 import han.ayeon.searchimgandvideo.R;
 import han.ayeon.searchimgandvideo.databinding.FragmentResultListBinding;
 import han.ayeon.searchimgandvideo.view.savedlist.list.SavedListRecyclerViewAdapter;
-import han.ayeon.searchimgandvideo.viewmodel.SavedListViewModel;
 
 public class SavedListFragment extends Fragment {
 
     private FragmentResultListBinding fragmentResultListBinding;
-    private SavedListViewModel savedListViewModel;
+    private SavedListRecyclerViewAdapter viewAdapter;
 
     public static SavedListFragment newInstance() {
 
@@ -33,13 +32,13 @@ public class SavedListFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        savedListViewModel = new SavedListViewModel();
-
         fragmentResultListBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_result_list, container, false);
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 3);
         fragmentResultListBinding.imageListView.setLayoutManager(gridLayoutManager);
 
+        viewAdapter = new SavedListRecyclerViewAdapter();
+        fragmentResultListBinding.imageListView.setAdapter(viewAdapter);
 
         return fragmentResultListBinding.getRoot();
     }
@@ -47,9 +46,7 @@ public class SavedListFragment extends Fragment {
 
     public void savedListChange(ArrayList<String> savedListUrl) {
 
-        if (savedListUrl != null) {
-            fragmentResultListBinding.imageListView.setAdapter(new SavedListRecyclerViewAdapter(savedListUrl));
-        }
+        viewAdapter.savedResultChange(savedListUrl);
         fragmentResultListBinding.executePendingBindings();
     }
 

@@ -75,17 +75,16 @@ public class SearchListFragment extends Fragment {
 
         fragmentResultListBinding.progressBar.setVisibility(View.VISIBLE);
         if (!word.isEmpty()) {
-            searchResultViewModel.searchByWord(word, queryResultCallBack);
+            searchResultViewModel.searchByWord(word, getDataResultCallBack);
         }
     }
 
-    SearchResultViewModel.QueryResultCallBack queryResultCallBack = new SearchResultViewModel.QueryResultCallBack() {
+    SearchResultViewModel.GetDataResultCallBack getDataResultCallBack = new SearchResultViewModel.GetDataResultCallBack() {
 
         @Override
         public void onSucceed(List<ResultData> result) {
             searchResultViewModel.resultData = (ArrayList<ResultData>) result;
-            fragmentResultListBinding.imageListView.setAdapter(
-                    new SearchListRecyclerViewAdapter(searchResultViewModel, changeCallBackListener));
+            fragmentResultListBinding.imageListView.setAdapter(new SearchListRecyclerViewAdapter(searchResultViewModel, changeCallBackListener));
             fragmentResultListBinding.executePendingBindings();
 
             fragmentResultListBinding.progressBar.setVisibility(View.GONE);

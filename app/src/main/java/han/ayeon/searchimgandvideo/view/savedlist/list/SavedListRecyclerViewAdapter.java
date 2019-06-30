@@ -15,24 +15,17 @@ import han.ayeon.searchimgandvideo.databinding.FragmentSavedItemBinding;;
 public class SavedListRecyclerViewAdapter extends RecyclerView.Adapter<SavedListViewHolder> {
 
     private ArrayList<String> savedResultUrl;
-    private SavedListViewHolder savedListViewHolder;
     private FragmentSavedItemBinding dataBinding;
 
-
-    public SavedListRecyclerViewAdapter(
-            ArrayList<String> savedResult) {
-        savedResultUrl = savedResult;
-
-    }
 
     @NonNull
     @Override
     public SavedListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-
         dataBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
                 R.layout.fragment_saved_item, parent, false);
-        savedListViewHolder = new SavedListViewHolder(dataBinding);
+
+        SavedListViewHolder savedListViewHolder = new SavedListViewHolder(dataBinding);
 
         return savedListViewHolder;
     }
@@ -40,12 +33,19 @@ public class SavedListRecyclerViewAdapter extends RecyclerView.Adapter<SavedList
     @Override
     public void onBindViewHolder(@NonNull SavedListViewHolder holder, int position) {
 
+        if(savedResultUrl==null) return;
         String url = savedResultUrl.get(position);
         holder.showThumbNail(url);
     }
 
     @Override
     public int getItemCount() {
-        return savedResultUrl.size();
+        if(savedResultUrl==null) return 0;
+        else return savedResultUrl.size();
+    }
+
+    public void savedResultChange(ArrayList<String> savedResultUrl) {
+        this.savedResultUrl = savedResultUrl;
+        notifyDataSetChanged();
     }
 }

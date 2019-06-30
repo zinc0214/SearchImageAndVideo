@@ -1,5 +1,5 @@
 package han.ayeon.searchimgandvideo.view;
 
-public interface ResultItemLoader {
+public interface ImageLoader {
     void showThumbNail(String url);
 }

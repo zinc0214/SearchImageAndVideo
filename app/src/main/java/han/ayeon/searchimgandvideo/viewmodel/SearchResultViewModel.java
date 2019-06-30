@@ -28,13 +28,13 @@ public class SearchResultViewModel extends ViewModel {
     public ArrayList<ResultData> resultData = new ArrayList<>();
 
 
-    public interface QueryResultCallBack {
+    public interface GetDataResultCallBack {
         void onSucceed(List<ResultData> result);
         void onFailed();
     }
 
     private interface QueryCallBack {
-        void getDataSucceed();
+        void onSucceed();
     }
 
 
@@ -45,32 +45,32 @@ public class SearchResultViewModel extends ViewModel {
             .create(SearchApiService.class);
 
 
-    public void searchByWord(final String searchWord, final QueryResultCallBack callBack) {
+    public void searchByWord(final String searchWord, final GetDataResultCallBack getDataResultCallBack) {
 
         final QueryCallBack searchVideoCallback = new QueryCallBack() {
 
             @Override
-            public void getDataSucceed() {
-                sortListByTime(callBack);
+            public void onSucceed() {
+                sortListByTime(getDataResultCallBack);
             }
         };
 
         final QueryCallBack searchImageCallback = new QueryCallBack() {
 
             @Override
-            public void getDataSucceed() {
-                searchVideo(searchWord, callBack, searchVideoCallback);
+            public void onSucceed() {
+                searchVideo(searchWord, getDataResultCallBack, searchVideoCallback);
             }
         };
 
 
         resultData.clear();
-        searchImage(searchWord, callBack, searchImageCallback);
+        searchImage(searchWord, getDataResultCallBack, searchImageCallback);
 
     }
 
 
-    private void searchImage(final String searchWord, final QueryResultCallBack callBack, final QueryCallBack queryCallBack) {
+    private void searchImage(final String searchWord, final GetDataResultCallBack getDataResultCallBack, final QueryCallBack queryCallBack) {
 
         searchApiService.queryImage(searchWord).enqueue(new Callback<ImageResponse>() {
             @Override
@@ -84,17 +84,17 @@ public class SearchResultViewModel extends ViewModel {
                                 im.get(i).getDisplay_sitename(), im.get(i).getThumbnail_url()));
                     }
 
-                    queryCallBack.getDataSucceed();
+                    queryCallBack.onSucceed();
 
 
                 } else {
-                    callBack.onFailed();
+                    getDataResultCallBack.onFailed();
                 }
             }
 
             @Override
             public void onFailure(Call<ImageResponse> call, Throwable t) {
-                callBack.onFailed();
+                getDataResultCallBack.onFailed();
             }
         });
 
@@ -102,7 +102,7 @@ public class SearchResultViewModel extends ViewModel {
     }
 
 
-    private void searchVideo(final String searchWord, final QueryResultCallBack callBack, final QueryCallBack queryCallBack) {
+    private void searchVideo(final String searchWord, final GetDataResultCallBack getDataResultCallBack, final QueryCallBack queryCallBack) {
 
         searchApiService.queryVideo(searchWord).enqueue(new Callback<VideoResponse>() {
             @Override
@@ -116,22 +116,22 @@ public class SearchResultViewModel extends ViewModel {
                                 im.get(i).getTitle(), im.get(i).getThumbnail()));
                     }
 
-                   queryCallBack.getDataSucceed();
+                   queryCallBack.onSucceed();
 
                 } else {
-                    callBack.onFailed();
+                    getDataResultCallBack.onFailed();
                 }
             }
 
             @Override
             public void onFailure(Call<VideoResponse> call, Throwable t) {
-                callBack.onFailed();
+                getDataResultCallBack.onFailed();
             }
         });
 
     }
 
-    private void sortListByTime(QueryResultCallBack callBack) {
+    private void sortListByTime(GetDataResultCallBack callBack) {
         if(!resultData.isEmpty()) {
                 Collections.sort(resultData, new Comparator<ResultData>() {
                     @Override
