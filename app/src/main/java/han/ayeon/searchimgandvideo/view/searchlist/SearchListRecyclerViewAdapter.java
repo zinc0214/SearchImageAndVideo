@@ -1,4 +1,4 @@
-package han.ayeon.searchimgandvideo.view.searchlist.list;
+package han.ayeon.searchimgandvideo.view.searchlist;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -12,24 +12,19 @@ import java.util.ArrayList;
 import han.ayeon.searchimgandvideo.R;
 
 import han.ayeon.searchimgandvideo.databinding.FragmentSearchResultItemBinding;
-import han.ayeon.searchimgandvideo.model.data.ResultData;
-import han.ayeon.searchimgandvideo.view.SavedListChangeCallBackListener;
+import han.ayeon.searchimgandvideo.model.data.Media;
 import han.ayeon.searchimgandvideo.viewmodel.SearchResultViewModel;
 
 public class SearchListRecyclerViewAdapter extends RecyclerView.Adapter<SearchListViewHolder> {
 
     private SearchResultViewModel viewModel;
-    private SavedListChangeCallBackListener listChangeCallBackListener;
-    private ArrayList<ResultData> resultData;
+    private ArrayList<Media> mediaList;
     private SearchListViewHolder searchListViewHolder;
     private FragmentSearchResultItemBinding dataBinding;
 
 
-    public SearchListRecyclerViewAdapter(SearchResultViewModel searchResultViewModel,
-                                         SavedListChangeCallBackListener callBackListener) {
+    public SearchListRecyclerViewAdapter(SearchResultViewModel searchResultViewModel) {
         this.viewModel = searchResultViewModel;
-        this.listChangeCallBackListener = callBackListener;
-        resultData = viewModel.resultData;
     }
 
     @NonNull
@@ -46,16 +41,23 @@ public class SearchListRecyclerViewAdapter extends RecyclerView.Adapter<SearchLi
     @Override
     public void onBindViewHolder(@NonNull SearchListViewHolder holder, int position) {
 
-        ResultData selectItem = resultData.get(position);
+        if(mediaList ==null) return;
+
+        Media selectItem = mediaList.get(position);
         holder.showThumbNail(selectItem.getThumbnailUrl());
         holder.setSavedState(selectItem.isSaved());
-        holder.itemOnClickListener(listChangeCallBackListener, selectItem);
+        holder.itemOnClickListener(viewModel, selectItem);
     }
 
     @Override
     public int getItemCount() {
-        return resultData.size();
+        if(mediaList == null) return 0;
+        return mediaList.size();
     }
 
+    public void resultDataListChange(ArrayList<Media> dataArrayList) {
+        mediaList = dataArrayList;
+        notifyDataSetChanged();
+    }
 
 }

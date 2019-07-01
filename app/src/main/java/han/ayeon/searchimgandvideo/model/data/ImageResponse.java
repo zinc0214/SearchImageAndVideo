@@ -11,15 +11,8 @@ public class ImageResponse {
         return meta;
     }
 
-    public void setMeta(Meta meta) {
-        this.meta = meta;
-    }
-
     public List<ImageDocument> getDocuments() {
         return documents;
     }
 
-    public void setDocuments(List<ImageDocument> documents) {
-        this.documents = documents;
-    }
 }

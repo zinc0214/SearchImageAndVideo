@@ -1,4 +1,4 @@
-package han.ayeon.searchimgandvideo.view.searchlist.list;
+package han.ayeon.searchimgandvideo.view.searchlist;
 
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -10,9 +10,9 @@ import com.bumptech.glide.Glide;
 
 import han.ayeon.searchimgandvideo.R;
 import han.ayeon.searchimgandvideo.databinding.FragmentSearchResultItemBinding;
-import han.ayeon.searchimgandvideo.model.data.ResultData;
+import han.ayeon.searchimgandvideo.model.data.Media;
 import han.ayeon.searchimgandvideo.view.ImageLoader;
-import han.ayeon.searchimgandvideo.view.SavedListChangeCallBackListener;
+import han.ayeon.searchimgandvideo.viewmodel.SearchResultViewModel;
 
 
 public class SearchListViewHolder extends RecyclerView.ViewHolder implements ImageLoader {
@@ -34,19 +34,18 @@ public class SearchListViewHolder extends RecyclerView.ViewHolder implements Ima
                 .into(thumbNailView);
     }
 
-    public void setSavedState(boolean isSaved) {
+    void setSavedState(boolean isSaved) {
         saveCheckBox.setChecked(isSaved);
     }
 
-    void itemOnClickListener (final SavedListChangeCallBackListener savedListChangeCallBackListener,
-                              final ResultData item) {
+    void itemOnClickListener (final SearchResultViewModel viewModel, final Media item) {
         saveCheckBox.setOnClickListener(v -> {
             if(item.isSaved()) {
-                savedListChangeCallBackListener.removed(item);
+                viewModel.removeSavedItem(item);
                 item.setSaved(false);
                 saveCheckBox.setChecked(false);
             } else {
-                savedListChangeCallBackListener.saved(item);
+                viewModel.addSavedItem(item);
                 item.setSaved(true);
                 saveCheckBox.setChecked(true);
             }

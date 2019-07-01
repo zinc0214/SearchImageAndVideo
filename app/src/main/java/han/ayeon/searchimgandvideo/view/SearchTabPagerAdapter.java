@@ -9,15 +9,14 @@ import java.util.List;
 
 public class SearchTabPagerAdapter extends FragmentStatePagerAdapter {
 
-
     private final List<Fragment> fragmentList = new ArrayList<>();
     private final List<String> pagerTitle = new ArrayList<>();
 
-    public SearchTabPagerAdapter(FragmentManager fm){
+    SearchTabPagerAdapter(FragmentManager fm){
         super(fm);
     }
 
-    public void addFragment(Fragment fragment, String title){
+    void addFragment(Fragment fragment, String title){
         fragmentList.add(fragment);
         pagerTitle.add(title);
     }

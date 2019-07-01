@@ -11,10 +11,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 
-import java.util.Objects;
-
 import han.ayeon.searchimgandvideo.R;
-import han.ayeon.searchimgandvideo.util.SavedListLiveData;
 import han.ayeon.searchimgandvideo.view.savedlist.SavedListFragment;
 import han.ayeon.searchimgandvideo.view.searchlist.SearchListFragment;
 
@@ -25,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
 
     private SearchListFragment searchListFragment;
     private SavedListFragment savedListFragment;
-    public SavedListLiveData savedList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,16 +40,6 @@ public class MainActivity extends AppCompatActivity {
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-
-        savedList = new SavedListLiveData();
-        savedList.observe(this, resultData -> {
-
-            if (savedList.getValue() == null || Objects.requireNonNull(savedList.getValue()).isEmpty()) {
-                return;
-            }
-            savedListFragment.savedListChange(savedList.getValue());
-
-        });
 
     }
 

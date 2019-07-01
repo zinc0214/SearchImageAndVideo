@@ -11,15 +11,8 @@ public class VideoResponse {
         return meta;
     }
 
-    public void setMeta(Meta meta) {
-        this.meta = meta;
-    }
-
     public List<VideoDocument> getDocuments() {
         return documents;
     }
 
-    public void setDocuments(List<VideoDocument> documents) {
-        this.documents = documents;
-    }
 }

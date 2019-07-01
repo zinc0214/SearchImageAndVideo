@@ -4,27 +4,32 @@ import androidx.lifecycle.LiveData;
 
 import java.util.ArrayList;
 
-public class SavedListLiveData extends LiveData<ArrayList<String>> {
+import han.ayeon.searchimgandvideo.model.data.Media;
 
-    private ArrayList<String> savedData = new ArrayList<>();
+public class SavedListLiveData extends LiveData<ArrayList<Media>> implements ListLiveData {
+
+    private ArrayList<Media> savedItemList = new ArrayList<>();
 
     public SavedListLiveData() {
-        setValue(savedData);
+        setValue(savedItemList);
     }
 
-    public void add(String item) {
-        savedData.add(item);
-        this.setValue(savedData);
+    @Override
+    public void add(Media item) {
+        savedItemList.add(item);
+        this.setValue(savedItemList);
     }
 
+    @Override
     public void clear() {
-        savedData.clear();
-        this.setValue(savedData);
+        savedItemList.clear();
+        this.setValue(savedItemList);
     }
 
-    public void remove(String item) {
-        savedData.remove(item);
-        this.setValue(savedData);
+    @Override
+    public void remove(Media item) {
+        savedItemList.remove(item);
+        this.setValue(savedItemList);
     }
 
 }

@@ -1,4 +1,4 @@
-package han.ayeon.searchimgandvideo.view.savedlist.list;
+package han.ayeon.searchimgandvideo.view.savedlist;
 
 import android.widget.ImageView;
 

@@ -1,4 +1,4 @@
-package han.ayeon.searchimgandvideo.view.savedlist.list;
+package han.ayeon.searchimgandvideo.view.savedlist;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -10,11 +10,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import han.ayeon.searchimgandvideo.R;
-import han.ayeon.searchimgandvideo.databinding.FragmentSavedItemBinding;;
+import han.ayeon.searchimgandvideo.databinding.FragmentSavedItemBinding;
+import han.ayeon.searchimgandvideo.model.data.Media;;
 
 public class SavedListRecyclerViewAdapter extends RecyclerView.Adapter<SavedListViewHolder> {
 
-    private ArrayList<String> savedResultUrl;
+    private ArrayList<Media> saveItemList;
     private FragmentSavedItemBinding dataBinding;
 
 
@@ -33,19 +34,19 @@ public class SavedListRecyclerViewAdapter extends RecyclerView.Adapter<SavedList
     @Override
     public void onBindViewHolder(@NonNull SavedListViewHolder holder, int position) {
 
-        if(savedResultUrl==null) return;
-        String url = savedResultUrl.get(position);
+        if(saveItemList ==null) return;
+        String url = saveItemList.get(position).getThumbnailUrl();
         holder.showThumbNail(url);
     }
 
     @Override
     public int getItemCount() {
-        if(savedResultUrl==null) return 0;
-        else return savedResultUrl.size();
+        if(saveItemList ==null) return 0;
+        else return saveItemList.size();
     }
 
-    public void savedResultChange(ArrayList<String> savedResultUrl) {
-        this.savedResultUrl = savedResultUrl;
+    public void savedResultChange(ArrayList<Media> resultData) {
+        this.saveItemList = resultData;
         notifyDataSetChanged();
     }
 }
