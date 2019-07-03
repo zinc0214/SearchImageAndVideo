@@ -31,7 +31,8 @@ public class SearchListRecyclerViewAdapter extends RecyclerView.Adapter<SearchLi
     @Override
     public SearchListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        dataBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.fragment_search_result_item, parent, false);
+        dataBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
+                R.layout.fragment_search_result_item, parent, false);
 
         searchListViewHolder = new SearchListViewHolder(dataBinding);
 

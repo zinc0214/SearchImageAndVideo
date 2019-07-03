@@ -45,7 +45,7 @@ public class SavedListRecyclerViewAdapter extends RecyclerView.Adapter<SavedList
         else return saveItemList.size();
     }
 
-    public void savedResultChange(ArrayList<Media> resultData) {
+    void savedResultChange(ArrayList<Media> resultData) {
         this.saveItemList = resultData;
         notifyDataSetChanged();
     }

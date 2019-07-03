@@ -15,12 +15,12 @@ import han.ayeon.searchimgandvideo.util.SavedListLiveData;
 public class SearchResultViewModel extends ViewModel {
 
     private ArrayList<Media> mediaList = new ArrayList<>();
-    public SavedListLiveData savedItemList;
+    public SavedListLiveData savedList;
 
     private SearchServiceImpl searchServiceImpl = new SearchServiceImpl();
 
     public SearchResultViewModel() {
-        savedItemList = new SavedListLiveData();
+        savedList = new SavedListLiveData();
     }
 
     public void searchByWord(String searchWord, FetchMediaApiResult fetchMediaApiResult) {
@@ -39,32 +39,19 @@ public class SearchResultViewModel extends ViewModel {
             }
         };
 
-        FetchMediaApiResult searchImageCallback = new FetchMediaApiResult() {
-
-            @Override
-            public void onSucceed(List<Media> result) {
-                mediaList.addAll(result);
-                searchServiceImpl.searchVideo(searchWord, searchVideoCallback);
-            }
-
-            @Override
-            public void onFailed() {
-                fetchMediaApiResult.onFailed();
-            }
-        };
 
         mediaList.clear();
-        searchServiceImpl.searchImage(searchWord, searchImageCallback);
+        searchServiceImpl.search(searchWord, searchVideoCallback);
 
     }
 
 
     public void addSavedItem(Media item) {
-        savedItemList.add(item);
+        savedList.add(item);
     }
 
     public void removeSavedItem(Media item) {
-        savedItemList.remove(item);
+        savedList.remove(item);
     }
 
     private void sortListByTime(FetchMediaApiResult callBack) {

@@ -1,7 +1,6 @@
 package han.ayeon.searchimgandvideo.model.web;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import han.ayeon.searchimgandvideo.model.data.FetchMediaApiResult;
 import han.ayeon.searchimgandvideo.model.data.ImageDocument;
@@ -9,77 +8,60 @@ import han.ayeon.searchimgandvideo.model.data.ImageResponse;
 import han.ayeon.searchimgandvideo.model.data.Media;
 import han.ayeon.searchimgandvideo.model.data.VideoDocument;
 import han.ayeon.searchimgandvideo.model.data.VideoResponse;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Action;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import static han.ayeon.searchimgandvideo.util.Converter.StringToDate;
 
-public class SearchServiceImpl {
+public class SearchServiceImpl implements SearchService {
 
     private SearchApiService searchApiService = new Retrofit.Builder()
             .baseUrl("https://dapi.kakao.com/v2/search/")
             .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
             .create(SearchApiService.class);
 
 
-    public void searchImage(final String searchWord, final FetchMediaApiResult queryCallBack) {
+    ArrayList<Media> mediaList = new ArrayList<>();
 
-        ArrayList<Media> resultData = new ArrayList<>();
+    public void search(String searchWord, FetchMediaApiResult queryCallBack) {
 
-        searchApiService.queryImage(searchWord).enqueue(new Callback<ImageResponse>() {
-            @Override
-            public void onResponse(Call<ImageResponse> call, Response<ImageResponse> response) {
-                if (response.isSuccessful()) {
+        Observable imageResponseObservable = searchApiService.queryImage(searchWord)
+                .map(ImageResponse::getDocuments)
+                .flatMap(documents -> parsingImageDocument((ArrayList<ImageDocument>) documents));
 
-                    List<ImageDocument> result = response.body().getDocuments();
-                    for (ImageDocument documents : result) {
-                        resultData.add(new Media(StringToDate(documents.getDatetime()), documents.getThumbnail_url()));
-                    }
-                    queryCallBack.onSucceed(resultData);
+        Observable videoResponseObservable = searchApiService.queryVideo(searchWord)
+                .map(VideoResponse::getDocuments)
+                .flatMap(documents -> parsingVideoDocument((ArrayList<VideoDocument>) documents));
 
-                } else {
-                    queryCallBack.onFailed();
-                }
-            }
+        Action finishAction = () -> {
+            queryCallBack.onSucceed(mediaList);
+        };
 
-            @Override
-            public void onFailure(Call<ImageResponse> call, Throwable t) {
-                queryCallBack.onFailed();
-            }
-        });
+        Observable<Media> source = Observable.concat(imageResponseObservable, videoResponseObservable);
 
-    }
+        source.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnError(Throwable -> { queryCallBack.onFailed(); })
+                .doOnComplete(finishAction)
+                .subscribe(media -> mediaList.add(media));
 
-    public void searchVideo(final String searchWord, final FetchMediaApiResult queryCallBack) {
-
-        ArrayList<Media> resultData = new ArrayList<>();
-
-        searchApiService.queryVideo(searchWord).enqueue(new Callback<VideoResponse>() {
-            @Override
-            public void onResponse(Call<VideoResponse> call, Response<VideoResponse> response) {
-                if (response.isSuccessful()) {
-
-                    List<VideoDocument> result = response.body().getDocuments();
-                    for (VideoDocument documents : result) {
-                        resultData.add(new Media(StringToDate(documents.getDatetime()), documents.getThumbnail()));
-                    }
-
-                    queryCallBack.onSucceed(resultData);
-
-                } else {
-                    queryCallBack.onFailed();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<VideoResponse> call, Throwable t) {
-                queryCallBack.onFailed();
-            }
-        });
 
     }
+
+    private Observable parsingImageDocument(ArrayList<ImageDocument> documents) {
+        return Observable.fromIterable(documents).map(document ->
+                new Media(StringToDate(document.getDatetime()), document.getThumbnail_url()));
+    }
+    private Observable parsingVideoDocument(ArrayList<VideoDocument> documents) {
+        return Observable.fromIterable(documents).map(document ->
+                new Media(StringToDate(document.getDatetime()), document.getThumbnail()));
+    }
+
 }

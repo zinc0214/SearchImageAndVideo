@@ -44,18 +44,18 @@ public class SavedListFragment extends Fragment {
         viewAdapter = new SavedListRecyclerViewAdapter();
         fragmentResultListBinding.imageListView.setAdapter(viewAdapter);
 
-        viewModel.savedItemList.observe(this, resultData -> {
-            if (viewModel.savedItemList.getValue() == null) return;
-            savedListChange(viewModel.savedItemList.getValue());
+        viewModel.savedList.observe(this, resultData -> {
+            if (viewModel.savedList.getValue() == null) return;
+            savedListChange(viewModel.savedList.getValue());
         });
 
         return fragmentResultListBinding.getRoot();
     }
 
 
-    private void savedListChange(ArrayList<Media> savedListUrl) {
+    private void savedListChange(ArrayList<Media> savedMediaList) {
 
-        viewAdapter.savedResultChange(savedListUrl);
+        viewAdapter.savedResultChange(savedMediaList);
         fragmentResultListBinding.executePendingBindings();
     }
 
