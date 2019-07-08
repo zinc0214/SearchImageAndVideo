@@ -1,12 +1,25 @@
 package han.ayeon.searchimgandvideo.model.data;
 
+import com.google.gson.annotations.SerializedName;
+
 public class VideoDocument {
 
+    @SerializedName("author")
     private String author;
+
+    @SerializedName("datetime")
     private String datetime;
-    private int play_time;
+
+    @SerializedName("play_time")
+    private int playTime;
+
+    @SerializedName("thumbnail")
     private String thumbnail;
+
+    @SerializedName("title")
     private String title;
+
+    @SerializedName("url")
     private String url;
 
     public String getAuthor() {
@@ -17,8 +30,8 @@ public class VideoDocument {
         return datetime;
     }
 
-    public int getPlay_time() {
-        return play_time;
+    public int getPlayTime() {
+        return playTime;
     }
 
     public String getThumbnail() {

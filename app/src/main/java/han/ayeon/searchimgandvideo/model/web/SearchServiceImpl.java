@@ -1,6 +1,9 @@
 package han.ayeon.searchimgandvideo.model.web;
 
+import android.util.Log;
+
 import java.util.ArrayList;
+import java.util.Collections;
 
 import han.ayeon.searchimgandvideo.model.data.FetchMediaApiResult;
 import han.ayeon.searchimgandvideo.model.data.ImageDocument;
@@ -28,28 +31,27 @@ public class SearchServiceImpl implements SearchService {
             .create(SearchApiService.class);
 
 
-    ArrayList<Media> mediaList = new ArrayList<>();
+    private ArrayList<Media> mediaList = new ArrayList<>();
 
     public void search(String searchWord, FetchMediaApiResult queryCallBack) {
 
-        Observable imageResponseObservable = searchApiService.queryImage(searchWord)
+        Action onCompleteAction = () -> Log.d("Concat", "onComplete");
+
+        Observable<Media> imageResponseObservable = searchApiService.queryImage(searchWord)
                 .map(ImageResponse::getDocuments)
-                .flatMap(documents -> parsingImageDocument((ArrayList<ImageDocument>) documents));
+                .flatMap(documents -> parsingImageDocument((ArrayList<ImageDocument>) documents))
+                .doOnComplete(onCompleteAction);
 
-        Observable videoResponseObservable = searchApiService.queryVideo(searchWord)
+        Observable<Media> videoResponseObservable = searchApiService.queryVideo(searchWord)
                 .map(VideoResponse::getDocuments)
-                .flatMap(documents -> parsingVideoDocument((ArrayList<VideoDocument>) documents));
+                .flatMap(documents -> parsingVideoDocument((ArrayList<VideoDocument>) documents))
+                .doOnComplete(onCompleteAction);
 
-        Action finishAction = () -> {
-            queryCallBack.onSucceed(mediaList);
-        };
-
-        Observable<Media> source = Observable.concat(imageResponseObservable, videoResponseObservable);
-
-        source.subscribeOn(Schedulers.io())
+        Observable.concat(imageResponseObservable, videoResponseObservable)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnError(Throwable -> { queryCallBack.onFailed(); })
-                .doOnComplete(finishAction)
+                .doOnError(Throwable -> queryCallBack.onFailed())
+                .doOnComplete( () -> sortListByTime(queryCallBack))
                 .subscribe(media -> mediaList.add(media));
 
 
@@ -57,11 +59,18 @@ public class SearchServiceImpl implements SearchService {
 
     private Observable parsingImageDocument(ArrayList<ImageDocument> documents) {
         return Observable.fromIterable(documents).map(document ->
-                new Media(StringToDate(document.getDatetime()), document.getThumbnail_url()));
+                new Media(StringToDate(document.getDatetime()), document.getThumbnailUrl()));
     }
     private Observable parsingVideoDocument(ArrayList<VideoDocument> documents) {
         return Observable.fromIterable(documents).map(document ->
                 new Media(StringToDate(document.getDatetime()), document.getThumbnail()));
+    }
+
+    private void sortListByTime(FetchMediaApiResult callBack) {
+        if (!mediaList.isEmpty()) {
+            Collections.sort(mediaList, (o1, o2) -> o2.getDate().compareTo(o1.getDate()));
+            callBack.onSucceed(mediaList);
+        }
     }
 
 }

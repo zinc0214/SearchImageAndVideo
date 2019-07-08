@@ -1,14 +1,31 @@
 package han.ayeon.searchimgandvideo.model.data;
 
+import com.google.gson.annotations.SerializedName;
+
 public class ImageDocument {
 
+    @SerializedName("collection")
     private String collection;
+
+    @SerializedName("datetime")
     private String datetime;
-    private String display_sitename;
-    private String doc_url;
+
+    @SerializedName("display_sitename")
+    private String displaySitename;
+
+    @SerializedName("doc_url")
+    private String docUrl;
+
+    @SerializedName("height")
     private int height;
-    private String image_url;
-    private String thumbnail_url;
+
+    @SerializedName("image_url")
+    private String imageUrl;
+
+    @SerializedName("thumbnail_url")
+    private String thumbnailUrl;
+
+    @SerializedName("width")
     private int width;
 
     public String getCollection() {
@@ -19,24 +36,24 @@ public class ImageDocument {
         return datetime;
     }
 
-    public String getDisplay_sitename() {
-        return display_sitename;
+    public String getDisplaySitename() {
+        return displaySitename;
     }
 
-    public String getDoc_url() {
-        return doc_url;
+    public String getDocUrl() {
+        return docUrl;
     }
 
     public int getHeight() {
         return height;
     }
 
-    public String getImage_url() {
-        return image_url;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public String getThumbnail_url() {
-        return thumbnail_url;
+    public String getThumbnailUrl() {
+        return thumbnailUrl;
     }
 
     public int getWidth() {
