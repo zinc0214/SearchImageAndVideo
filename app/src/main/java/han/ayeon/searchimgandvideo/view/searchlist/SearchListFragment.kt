@@ -15,7 +15,8 @@ import han.ayeon.searchimgandvideo.model.data.FetchMediaApiResult
 import han.ayeon.searchimgandvideo.model.data.Media
 import han.ayeon.searchimgandvideo.viewmodel.SearchResultViewModel
 import kotlinx.android.synthetic.main.fragment_result_list.*
-import java.util.ArrayList
+import java.util.*
+
 
 /**
  * Created by HanAYeon on 2019-07-18.

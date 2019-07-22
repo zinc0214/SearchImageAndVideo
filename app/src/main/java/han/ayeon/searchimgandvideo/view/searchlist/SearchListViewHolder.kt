@@ -28,7 +28,7 @@ class SearchListViewHolder(itemView: FragmentSearchResultItemBinding) : Recycler
     fun itemOnClickListener(viewModel: SearchResultViewModel, item: Media) {
         itemView.save_button.setOnClickListener {
             if (item.isSaved) {
-                viewModel.remoedSavedItem(item)
+                viewModel.removedSavedItem(item)
                 item.isSaved = false
                 itemView.save_button.isChecked = false
             } else {

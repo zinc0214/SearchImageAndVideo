@@ -13,7 +13,6 @@ import han.ayeon.searchimgandvideo.R
 import han.ayeon.searchimgandvideo.databinding.FragmentResultListBinding
 import han.ayeon.searchimgandvideo.model.data.Media
 import han.ayeon.searchimgandvideo.viewmodel.SearchResultViewModel
-import kotlinx.android.synthetic.main.fragment_result_list.*
 
 /**
  * Created by HanAYeon on 2019-07-18.

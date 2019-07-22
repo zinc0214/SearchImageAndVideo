@@ -27,7 +27,7 @@ class SearchResultViewModel : ViewModel() {
         savedList.add(item)
     }
 
-    fun remoedSavedItem(item: Media) {
+    fun removedSavedItem(item: Media) {
         savedList.remove(item)
     }
 }
