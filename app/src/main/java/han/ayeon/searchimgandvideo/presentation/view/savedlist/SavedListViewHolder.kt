@@ -1,10 +1,10 @@
-package han.ayeon.searchimgandvideo.view.savedlist
+package han.ayeon.searchimgandvideo.presentation.view.savedlist
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import han.ayeon.searchimgandvideo.R
 import han.ayeon.searchimgandvideo.databinding.FragmentSavedItemBinding
-import han.ayeon.searchimgandvideo.view.ImageLoader
+import han.ayeon.searchimgandvideo.presentation.view.ImageLoader
 import kotlinx.android.synthetic.main.fragment_saved_item.view.*
 
 /**

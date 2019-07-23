@@ -1,4 +1,4 @@
-package han.ayeon.searchimgandvideo.view.searchlist
+package han.ayeon.searchimgandvideo.presentation.view.searchlist
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,9 +11,9 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import han.ayeon.searchimgandvideo.R
 import han.ayeon.searchimgandvideo.databinding.FragmentResultListBinding
-import han.ayeon.searchimgandvideo.model.data.FetchMediaApiResult
-import han.ayeon.searchimgandvideo.model.data.Media
-import han.ayeon.searchimgandvideo.viewmodel.SearchResultViewModel
+import han.ayeon.searchimgandvideo.domain.data.FetchMediaApiResult
+import han.ayeon.searchimgandvideo.domain.data.Media
+import han.ayeon.searchimgandvideo.presentation.viewmodel.SearchResultViewModel
 import kotlinx.android.synthetic.main.fragment_result_list.*
 import java.util.*
 

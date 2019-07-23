@@ -1,4 +1,4 @@
-package han.ayeon.searchimgandvideo.view.searchlist
+package han.ayeon.searchimgandvideo.presentation.view.searchlist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,8 +6,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import han.ayeon.searchimgandvideo.R
 import han.ayeon.searchimgandvideo.databinding.FragmentSearchResultItemBinding
-import han.ayeon.searchimgandvideo.model.data.Media
-import han.ayeon.searchimgandvideo.viewmodel.SearchResultViewModel
+import han.ayeon.searchimgandvideo.domain.data.Media
+import han.ayeon.searchimgandvideo.presentation.viewmodel.SearchResultViewModel
 
 /**
  * Created by HanAYeon on 2019-07-18.

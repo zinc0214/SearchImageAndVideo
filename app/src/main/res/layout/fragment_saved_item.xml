@@ -7,7 +7,7 @@
 
         <variable
             name="vm"
-            type="han.ayeon.searchimgandvideo.viewmodel.SearchResultViewModel" />
+            type="han.ayeon.searchimgandvideo.presentation.viewmodel.SearchResultViewModel" />
 
     </data>
 

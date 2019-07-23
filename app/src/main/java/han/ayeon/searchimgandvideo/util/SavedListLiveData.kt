@@ -1,7 +1,7 @@
 package han.ayeon.searchimgandvideo.util
 
 import androidx.lifecycle.LiveData
-import han.ayeon.searchimgandvideo.model.data.Media
+import han.ayeon.searchimgandvideo.domain.data.Media
 import java.util.ArrayList
 
 /**

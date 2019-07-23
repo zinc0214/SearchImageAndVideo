@@ -1,13 +1,12 @@
-package han.ayeon.searchimgandvideo.view.savedlist
+package han.ayeon.searchimgandvideo.presentation.view.savedlist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import han.ayeon.searchimgandvideo.R
-import han.ayeon.searchimgandvideo.databinding.FragmentResultListBinding
 import han.ayeon.searchimgandvideo.databinding.FragmentSavedItemBinding
-import han.ayeon.searchimgandvideo.model.data.Media
+import han.ayeon.searchimgandvideo.domain.data.Media
 
 /**
  * Created by HanAYeon on 2019-07-18.

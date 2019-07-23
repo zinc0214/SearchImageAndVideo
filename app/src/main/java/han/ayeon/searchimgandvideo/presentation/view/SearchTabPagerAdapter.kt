@@ -1,4 +1,4 @@
-package han.ayeon.searchimgandvideo.view
+package han.ayeon.searchimgandvideo.presentation.view
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

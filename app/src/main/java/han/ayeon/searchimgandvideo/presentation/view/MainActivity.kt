@@ -1,4 +1,4 @@
-package han.ayeon.searchimgandvideo.view
+package han.ayeon.searchimgandvideo.presentation.view
 
 import android.os.Bundle
 import android.view.Menu
@@ -7,8 +7,8 @@ import androidx.appcompat.widget.SearchView
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import han.ayeon.searchimgandvideo.R
-import han.ayeon.searchimgandvideo.view.savedlist.SavedListFragment
-import han.ayeon.searchimgandvideo.view.searchlist.SearchListFragment
+import han.ayeon.searchimgandvideo.presentation.view.savedlist.SavedListFragment
+import han.ayeon.searchimgandvideo.presentation.view.searchlist.SearchListFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**
