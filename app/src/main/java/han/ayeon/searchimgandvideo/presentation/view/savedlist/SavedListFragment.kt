@@ -24,8 +24,8 @@ class SavedListFragment : Fragment() {
     private lateinit var viewAdapter: SavedListRecyclerViewAdapter
     private lateinit var viewModel : SearchResultViewModel
 
-    fun newInstance(): SavedListFragment {
-
+    fun newInstance(viewModel: SearchResultViewModel): SavedListFragment {
+        this.viewModel = viewModel
         return SavedListFragment()
     }
 

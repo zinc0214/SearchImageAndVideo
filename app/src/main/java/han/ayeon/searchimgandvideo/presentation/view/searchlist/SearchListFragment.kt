@@ -28,8 +28,8 @@ class SearchListFragment : Fragment() {
     private lateinit var viewModel : SearchResultViewModel
     private lateinit var viewAdapter: SearchListRecyclerViewAdapter
 
-    fun newInstance(): SearchListFragment {
-
+    fun newInstance(viewModel: SearchResultViewModel): SearchListFragment {
+        this.viewModel = viewModel
         return SearchListFragment()
     }
 

@@ -3,7 +3,9 @@ package han.ayeon.searchimgandvideo.data.repository.searchlist
 import android.annotation.SuppressLint
 import han.ayeon.searchimgandvideo.domain.data.FetchMediaApiResult
 import han.ayeon.searchimgandvideo.domain.data.Media
+import han.ayeon.searchimgandvideo.domain.repository.searchlist.ImageRepository
 import han.ayeon.searchimgandvideo.domain.repository.searchlist.MediaRepository
+import han.ayeon.searchimgandvideo.domain.repository.searchlist.VideoRepository
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -13,7 +15,8 @@ import java.util.ArrayList
  * Created by HanAYeon on 2019-07-23.
  */
 
-class MediaRepositoryImpl : MediaRepository {
+class MediaRepositoryImpl(private val imageRepository : ImageRepository,
+                          private val videoRepository : VideoRepository) : MediaRepository {
 
     private var mediaList = ArrayList<Media>()
 
@@ -22,7 +25,7 @@ class MediaRepositoryImpl : MediaRepository {
 
         mediaList.clear()
 
-        Observable.concat(ImageRepositoryImpl().get(searchWord), VideoRepositoryImpl().get(searchWord))
+        Observable.concat(imageRepository.get(searchWord), videoRepository.get(searchWord))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnError { queryCallBack.onFailed() }
