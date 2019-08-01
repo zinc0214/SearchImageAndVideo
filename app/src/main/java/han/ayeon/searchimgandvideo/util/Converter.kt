@@ -8,20 +8,15 @@ import java.util.*
  * Created by HanAYeon on 2019-07-18.
  */
 
-class Converter {
+private val formatter = SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS", Locale.KOREA)
 
-    val fomatter = SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS", Locale.KOREA)
-
-    fun StringToDate(string : String) : Date? {
-        val time = string.replace("T", " ")
-        try {
-            return fomatter.parse(time)
-        } catch (e: ParseException) {
-            e.printStackTrace()
-        }
-
-        return null
+fun String.toDate() : Date? {
+    val time = this.replace("T", " ")
+    try {
+        return formatter.parse(time)
+    } catch (e: ParseException) {
+        e.printStackTrace()
     }
 
-
+    return null
 }

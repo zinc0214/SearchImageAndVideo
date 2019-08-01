@@ -1,6 +1,6 @@
 package han.ayeon.searchimgandvideo.util
 
-import han.ayeon.searchimgandvideo.model.data.Media
+import han.ayeon.searchimgandvideo.domain.data.Media
 
 /**
  * Created by HanAYeon on 2019-07-18.
